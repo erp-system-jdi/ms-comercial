@@ -30,8 +30,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
-services:
-  ms-cliente:
-    url: ${MS_CLIENTE_HOST:http://localhost:8080/api/v1/cliente}
 
 
