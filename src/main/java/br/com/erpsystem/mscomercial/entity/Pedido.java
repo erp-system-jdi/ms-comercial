@@ -12,14 +12,16 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "TB_02_PEDIDO")
 @Builder
-public class Pedido {
+@Entity(name = "TB_02_PEDIDO")
+public class Pedido{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, unique = true, nullable = false)
     private UUID id;
+
     @Column(name = "valor_total", unique = true)
     private BigDecimal valorTotal;
 

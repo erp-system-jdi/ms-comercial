@@ -21,7 +21,7 @@ public class ComercialController {
     private final PedidoService pedidoService;
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PedidoDTO> criacaoPedido(@RequestBody PedidoDTO pedidoDTO){
+    public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoDTO pedidoDTO){
         log.info("ComercialController.criacaoPedido - Start - PedidoDTO: {}", pedidoDTO);
         pedidoService.criarPedido(pedidoDTO);
         log.info("ComercialController.criacaoPedido - End");
