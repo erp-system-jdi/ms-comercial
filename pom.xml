@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>br.com.erp-system</groupId>
 		<artifactId>bom-erp-system-jdi</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>ms-sales</artifactId>
@@ -13,4 +13,10 @@
 	<name>ms-sales</name>
 	<description>Demo project for Spring Boot</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+	</dependencies>
 </project>
