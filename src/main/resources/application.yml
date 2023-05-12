@@ -7,7 +7,7 @@ logging:
 
 spring:
   application:
-    name: ms-comercial
+    name: ms-sales
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
     username: ${RABBITMQ_USERNAME:guest}
@@ -17,21 +17,19 @@ spring:
       simple:
         max-concurrency: 2
     connection-timeout: 1000
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_HOST:jdbc:mysql://localhost:3306/db_01_cliente_ms}
-    username: ${MYSQL_USERNAME:cliente-user}
-    password: ${MYSQL_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
 services:
-  ms-cliente:
-    url: ${MS_CLIENTE_HOST:http://localhost:8080/api/v1/cliente}
+  ms-customer:
+    url: ${MS_CUSTOMER:http://localhost:8080/api/v1/customer}
+  ms-products:
+    url: ${MS_PRODUCTS:http://localhost:8082/api/v1/products}
 
 

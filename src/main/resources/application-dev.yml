@@ -1,30 +1,18 @@
 server:
   port: 8081
 
-logging:
-  level:
-    br.com.erpsystem: DEBUG
-
 spring:
-  application:
-    name: ms-comercial
-  rabbitmq:
-    host: ${RABBITMQ_HOST:localhost}
-    username: ${RABBITMQ_USERNAME:guest}
-    password: ${RABBITMQ_PASSWORD:guest}
-    port: ${RABBITMQ_PORT:5672}
-    listener:
-      simple:
-        max-concurrency: 2
-    connection-timeout: 1000
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_HOST:jdbc:mysql://localhost:3306/db_02_comercial_ms}
-    username: ${MYSQL_USERNAME:comercial-user}
+    url: ${MYSQL_HOST:jdbc:mysql://localhost:3306/db_02_sales_ms}
+    username: ${MYSQL_USERNAME:sales-user}
     password: ${MYSQL_PASSWORD:password}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
