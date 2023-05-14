@@ -1,4 +1,4 @@
-CREATE TABLE `tb_01_order` (
+CREATE TABLE IF NOT EXISTS `tb_01_order` (
   `id` binary(16) NOT NULL,
   `create_date` date DEFAULT NULL,
   `customer_cpf` varchar(255) DEFAULT NULL,

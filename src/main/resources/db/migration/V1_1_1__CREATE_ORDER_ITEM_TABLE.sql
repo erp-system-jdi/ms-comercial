@@ -1,4 +1,4 @@
-CREATE TABLE `tb_02_order_item` (
+CREATE TABLE IF NOT EXISTS `tb_02_order_item` (
   `id` binary(16) NOT NULL,
   `product_id` varchar(255) DEFAULT NULL,
   `quantity` int DEFAULT NULL,
