@@ -1,7 +1,7 @@
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-arm64
 
-COPY *.jar app.jar
+COPY target/*.jar app.jar
 
-EXPOSE ${SALES_PORT}
+EXPOSE 8081
 
-CMD [ "java", "-jar","-Dspring.profiles.active=dev", "/app.jar" ]
+CMD [ "java", "-jar", "/app.jar" ]

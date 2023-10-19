@@ -1,25 +1,21 @@
 server:
-  port: ${SALES_PORT:8081}
-
-logging:
-  level:
-    br.com.erpsystem: DEBUG
+  port: 8081
 
 spring:
   application:
     name: ms-sales
   rabbitmq:
-    host: ${RABBITMQ_HOST:localhost}
-    username: ${RABBITMQ_USERNAME:guest}
-    password: ${RABBITMQ_PASSWORD:guest}
-    port: ${RABBITMQ_PORT:5672}
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    port: ${RABBITMQ_PORT}
     listener:
       simple:
         max-concurrency: 2
     connection-timeout: 1000
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
     open-in-view: false
     properties:
@@ -28,8 +24,8 @@ spring:
 
 services:
   ms-customer:
-    url: ${MS_CUSTOMER:http://localhost:8080/api/v1/customer}
+    url: http://ms-customer:8080/api/v1/customer
   ms-products:
-    url: ${MS_PRODUCTS:http://localhost:8082/api/v1/products}
+    url: http://ms-products:8082/api/v1/products
 
 
