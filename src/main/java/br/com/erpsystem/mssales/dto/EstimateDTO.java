@@ -1,13 +1,14 @@
 package br.com.erpsystem.mssales.dto;
 
+import br.com.erpsystem.mssales.entity.EstimateItem;
 import br.com.erpsystem.mssales.enums.PaymentTypeEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-public class OrderDTO {
+public class EstimateDTO {
 
     @JsonProperty("id")
     private UUID id;
@@ -25,14 +26,12 @@ public class OrderDTO {
     private BigDecimal totalPrice;
     @JsonProperty("customer_cpf")
     private String customerCpf;
-    @JsonProperty("products_order")
-    private Set<OrderItemDTO> productsOrder;
-    @JsonProperty("payment_type")
+    @JsonProperty("productsEstimate")
+    private Set<EstimateItemDTO> productsEstimate;
+    @JsonProperty("paymentType")
     private PaymentTypeEnum paymentType;
-    @JsonIgnore
-    private LocalDate createDate;
-    @JsonProperty("delivery_date")
-    private LocalDate deliveryDate;
+    @JsonProperty("validate_estimate")
+    private LocalDate validateEstimate;
     @JsonProperty("matriculation")
     private String matriculation;
 }

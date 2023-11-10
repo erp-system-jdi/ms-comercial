@@ -1,7 +1,5 @@
 package br.com.erpsystem.mssales.dto;
 
-
-import br.com.erpsystem.mssales.enums.PaymentTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +10,10 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class OrderItemDTO {
-
+public class EstimateItemDTO {
     @JsonProperty("id")
     private UUID id;
     @JsonProperty("product_id")
@@ -25,4 +22,6 @@ public class OrderItemDTO {
     private Integer quantity;
     @JsonProperty("unit_price")
     private BigDecimal unitPrice;
+
+
 }

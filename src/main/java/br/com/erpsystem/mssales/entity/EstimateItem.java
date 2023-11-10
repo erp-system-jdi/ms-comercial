@@ -1,6 +1,5 @@
 package br.com.erpsystem.mssales.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +8,11 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "TB_02_ORDER_ITEM")
-public class OrderItem implements Serializable {
+@Entity(name = "TB_04_ESTIMATE_ITEM")
+public class EstimateItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,5 +24,6 @@ public class OrderItem implements Serializable {
     private Integer quantity;
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
+
 
 }

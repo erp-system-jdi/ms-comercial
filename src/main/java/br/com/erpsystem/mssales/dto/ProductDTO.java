@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class ProductDTO {
     @JsonProperty("sale_unit")
     private String saleUnit;
     @JsonProperty("unit_price")
-    private Double unitPrice;
+    private BigDecimal unitPrice;
     @JsonProperty("active")
     private Boolean isActive;
     @JsonProperty("description")
