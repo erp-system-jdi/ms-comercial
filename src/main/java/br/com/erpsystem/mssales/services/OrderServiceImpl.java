@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
         CustomerDTO customerDTO = findCustomer(orderDTO);
 
-        if(orderDTO.getOrderDTO().getProductsOrder().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
+        if(orderDTO.getOrderDTO().getProducts().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
             log.info("OrderServiceImpl.createOrder - Error - order: {}", orderDTO);
             throw new CustomerNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, CUSTOMER_NOT_REGISTERED ));
         }
@@ -82,13 +82,13 @@ public class OrderServiceImpl implements OrderService {
 
     private BigDecimal calculateTotalPrice(CreateOrderRequestDTO orderRequestDTO){
         getUnitPrice(orderRequestDTO);
-        double sum = orderRequestDTO.getOrderDTO().getProductsOrder().stream()
+        double sum = orderRequestDTO.getOrderDTO().getProducts().stream()
                 .mapToDouble(orderItemDTO -> orderItemDTO.getUnitPrice().doubleValue() * orderItemDTO.getQuantity()).sum();
         return BigDecimal.valueOf(sum);
     }
 
     private void getUnitPrice(CreateOrderRequestDTO orderRequestDTO){
-        orderRequestDTO.getOrderDTO().getProductsOrder().forEach(orderItemDTO -> {
+        orderRequestDTO.getOrderDTO().getProducts().forEach(orderItemDTO -> {
             ProductDTO productDTO = productClient.findProductById(orderItemDTO.getProductId()).getProductDTO();
 
             if(validateProductStock(productDTO, orderItemDTO.getQuantity())){

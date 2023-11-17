@@ -13,10 +13,7 @@ import br.com.erpsystem.mssales.dto.http.response.CreateOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchEstimatesResponseDTO;
 import br.com.erpsystem.mssales.entity.Estimate;
 import br.com.erpsystem.mssales.entity.Order;
-import br.com.erpsystem.mssales.exceptions.CustomerNotFoundException;
-import br.com.erpsystem.mssales.exceptions.ExceptionResponse;
-import br.com.erpsystem.mssales.exceptions.ExpiredEstimateException;
-import br.com.erpsystem.mssales.exceptions.ProductOutOfStockException;
+import br.com.erpsystem.mssales.exceptions.*;
 import br.com.erpsystem.mssales.mapper.EstimateMapper;
 import br.com.erpsystem.mssales.mapper.OrderMapper;
 import br.com.erpsystem.mssales.repository.EstimateRepository;
@@ -54,10 +51,15 @@ public class EstimateServiceImpl implements EstimateService{
 
         CustomerDTO customerDTO = findCustomer(estimateDTO);
 
-        if(estimateDTO.getEstimateDTO().getProductsEstimate().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
+        log.info("EstimateServiceImpl.createEstimate - Customer: {}", customerDTO);
+
+        if(estimateDTO.getEstimateDTO().getProducts().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
             log.info("EstimateServiceImpl.createEstimate - Error - estimate: {}", estimateDTO);
             throw new CustomerNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, CUSTOMER_NOT_REGISTERED));
         }
+
+        LocalDate validateEstimate = LocalDate.now().plusDays(5);
+        estimateDTO.getEstimateDTO().setExpirationDate(validateEstimate);
         estimateDTO.getEstimateDTO().setTotalPrice(calculateTotalPrice(estimateDTO));
         Estimate estimate = estimateRepository.save(estimateMapper.estimateDTOToEstimate(estimateDTO.getEstimateDTO()));
         return CreateEstimateResponseDTO.builder().estimateId(estimateMapper.estimateToEstimateDTO(estimate).getId()).build();
@@ -66,9 +68,14 @@ public class EstimateServiceImpl implements EstimateService{
     @Override
     @Transactional
     public SearchEstimatesResponseDTO searchEstimateByCpf(String cpf) {
-        log.info("EstimateServiceImpl.searchEstimateByCpf - Start - Cpf: {}, cpf", cpf);
+        log.info("EstimateServiceImpl.searchEstimateByCpf - Start - Cpf: {}", cpf);
 
         List<EstimateDTO> estimateDTO = estimateMapper.estimatesToEstimatesDTO(estimateRepository.findEstimatesByCustomerCpf(cpf));
+
+        if(estimateDTO.isEmpty()){
+            log.error("EstimateServiceImpl.searchEstimateByCpf - Não foram encontrados orçamentos para este cliente!");
+            throw new EstimateNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, ESTIMATE_NOT_FOUND));
+        }
         log.info("EstimateServiceImpl.searchEstimateByCpf - End");
         return SearchEstimatesResponseDTO.builder().estimateDTO(estimateDTO).build();
     }
@@ -76,11 +83,13 @@ public class EstimateServiceImpl implements EstimateService{
     @Override
     public CreateOrderResponseDTO confirmEstimate(EstimateDTO estimateDTO) {
 
-        Duration validEstimate = Duration.between(estimateDTO.getValidateEstimate(), LocalDate.now());
-        long days = validEstimate.toDays();
-
-        if(days <= 5){
+        if(!LocalDate.now().isAfter(estimateDTO.getExpirationDate())){
             log.info("EstimateServiceImpl.confirmEstimate - O orçamento está válido! (D-5)");
+
+            if(estimateDTO.getDeliveryDate() == null){
+                log.info("EstimateServiceImpl.confirmEstimate - Error - O preenchimento da data de entrega é obrigatório!");
+                throw new BusinessException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, DELIVERY_DATE));
+            }
 
             OrderDTO orderDTO = orderMapper.estimateDTOToOrderDTO(estimateDTO);
             orderDTO.setCreateDate(LocalDate.now());
@@ -102,14 +111,14 @@ public class EstimateServiceImpl implements EstimateService{
 
     private BigDecimal calculateTotalPrice(CreateEstimateRequestDTO estimateRequestDTO){
         getUnitPrice(estimateRequestDTO);
-        double sum = estimateRequestDTO.getEstimateDTO().getProductsEstimate().stream()
+        double sum = estimateRequestDTO.getEstimateDTO().getProducts().stream()
                 .mapToDouble(estimateItemDTO -> estimateItemDTO.getUnitPrice().doubleValue() * estimateItemDTO.getQuantity()).sum();
 
         return BigDecimal.valueOf(sum);
     }
 
     private void getUnitPrice(CreateEstimateRequestDTO estimateRequestDTO){
-        estimateRequestDTO.getEstimateDTO().getProductsEstimate().forEach(estimateItem -> {
+        estimateRequestDTO.getEstimateDTO().getProducts().forEach(estimateItem -> {
             ProductDTO productDTO = productClient.findProductById(estimateItem.getProductId()).getProductDTO();
 
             if(validateProductStock(productDTO, estimateItem.getQuantity())){
@@ -123,6 +132,6 @@ public class EstimateServiceImpl implements EstimateService{
     }
 
     private boolean validateProductStock(ProductDTO productDTO, Integer orderQuantity){
-        return orderQuantity >= productDTO.getQuantityInStock();
+        return orderQuantity <= productDTO.getQuantityInStock();
     }
 }

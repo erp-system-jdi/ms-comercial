@@ -25,8 +25,8 @@ public class OrderDTO {
     private BigDecimal totalPrice;
     @JsonProperty("customer_cpf")
     private String customerCpf;
-    @JsonProperty("products_order")
-    private Set<OrderItemDTO> productsOrder;
+    @JsonProperty("products")
+    private Set<OrderItemDTO> products;
     @JsonProperty("payment_type")
     private PaymentTypeEnum paymentType;
     @JsonIgnore

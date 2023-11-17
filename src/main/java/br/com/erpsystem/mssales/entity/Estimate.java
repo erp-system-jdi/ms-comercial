@@ -27,11 +27,11 @@ public class Estimate implements Serializable {
     private String customerCpf;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "estimate_id")
-    private Set<EstimateItem> productsEstimate;
+    private Set<EstimateItem> products;
     @Column(name = "payment_type")
     private PaymentTypeEnum paymentType;
-    @Column(name = "validate_estimate")
-    private LocalDate validateEstimate;
+    @Column(name = "expiration_date")
+    private LocalDate expirationDate;
     @Column(name = "matriculation")
     private String matriculation;
 

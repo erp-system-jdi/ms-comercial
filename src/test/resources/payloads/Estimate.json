@@ -1,0 +1,16 @@
+{
+  "id": "cc6aa67e-3078-481b-8e3d-7f41aa131510",
+  "totalPrice": 16.50,
+  "customerCpf": "78945612300",
+  "productsEstimate": [
+    {
+      "id": "d3c1419c-7fc7-4945-9bf0-05e39d969a18",
+      "productId": "test_8e0eea26d7ff",
+      "quantity": 11,
+      "unitPrice": 1.50
+    }
+  ],
+  "paymentType": "PIX",
+  "validateEstimate": "2023-11-18",
+  "matriculation": "test_24f92d3c267c"
+}

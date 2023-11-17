@@ -28,7 +28,7 @@ public class Order implements Serializable {
     private String customerCpf;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Set<OrderItem> productsOrder;
+    private Set<OrderItem> products;
     @Column(name = "payment_type")
     private PaymentTypeEnum paymentType;
     @Column(name = "create_date")

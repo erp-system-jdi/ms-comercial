@@ -2,11 +2,13 @@ package br.com.erpsystem.mssales.dto;
 
 import br.com.erpsystem.mssales.entity.EstimateItem;
 import br.com.erpsystem.mssales.enums.PaymentTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,12 +28,14 @@ public class EstimateDTO {
     private BigDecimal totalPrice;
     @JsonProperty("customer_cpf")
     private String customerCpf;
-    @JsonProperty("productsEstimate")
-    private Set<EstimateItemDTO> productsEstimate;
-    @JsonProperty("paymentType")
+    @JsonProperty("products")
+    private Set<EstimateItemDTO> products;
+    @JsonProperty("payment_type")
     private PaymentTypeEnum paymentType;
-    @JsonProperty("validate_estimate")
-    private LocalDate validateEstimate;
+    @JsonProperty("expiration_date")
+    private LocalDate expirationDate;
+    @JsonProperty("delivery_date")
+    private LocalDate deliveryDate;
     @JsonProperty("matriculation")
     private String matriculation;
 }

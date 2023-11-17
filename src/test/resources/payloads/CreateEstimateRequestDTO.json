@@ -1,0 +1,18 @@
+{
+  "estimate": {
+    "id": null,
+    "total_price": null,
+    "customer_cpf": "78945612300",
+    "productsEstimate": [
+      {
+        "id": "d3c1419c-7fc7-4945-9bf0-05e39d969a18",
+        "product_id": "test_efa84d4e7abb",
+        "quantity": 2,
+        "unit_price": null
+      }
+    ],
+    "paymentType": "PIX",
+    "validate_estimate": null,
+    "matriculation": "test_24f92d3c267c"
+  }
+}
