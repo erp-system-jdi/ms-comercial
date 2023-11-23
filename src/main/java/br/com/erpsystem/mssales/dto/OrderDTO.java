@@ -29,7 +29,7 @@ public class OrderDTO {
     private Set<OrderItemDTO> products;
     @JsonProperty("payment_type")
     private PaymentTypeEnum paymentType;
-    @JsonIgnore
+    @JsonProperty("create_date")
     private LocalDate createDate;
     @JsonProperty("delivery_date")
     private LocalDate deliveryDate;

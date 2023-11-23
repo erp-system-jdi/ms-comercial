@@ -1,0 +1,21 @@
+{
+  "orders": [
+    {
+      "id": "fd051d25-802f-4434-b12e-d1b0c1ac03c2",
+      "total_price": 11.51,
+      "customer_cpf": "test_ba00fe08f827",
+      "products": [
+        {
+          "id": "67c5ce83-c9f1-4ef1-a0c5-909f2094654e",
+          "product_id": "test_53f496f00f54",
+          "quantity": 92,
+          "unit_price": 65.58
+        }
+      ],
+      "payment_type": "CARTAO_DEBITO",
+      "create_date": "2023-08-01",
+      "delivery_date": "2014-08-08",
+      "matriculation": "test_e50a42f4b33f"
+    }
+  ]
+}

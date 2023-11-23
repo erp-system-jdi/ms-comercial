@@ -1,0 +1,18 @@
+{
+  "order": {
+    "id": "3d71e7c3-7b3f-4a46-ae6d-b8fd3e7fe211",
+    "total_price": 16.50,
+    "customer_cpf": "78945612300",
+    "products": [
+      {
+        "id": "871326dc-2162-4770-95da-3a93dfab4b91",
+        "product_id": "test_07fe0ada3d3d",
+        "quantity": 11,
+        "unit_price": 1.50
+      }
+    ],
+    "payment_type": "DINHEIRO",
+    "delivery_date": "2024-05-18",
+    "matriculation": "test_2329d8017b6f"
+  }
+}

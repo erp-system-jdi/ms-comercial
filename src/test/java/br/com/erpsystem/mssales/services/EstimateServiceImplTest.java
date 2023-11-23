@@ -70,7 +70,8 @@ class EstimateServiceImplTest {
     @Test
     void createEstimate() throws IOException {
 
-        Estimate ESTIMATE = JsonUtils.getObjectFromFile(ESTIMATE_JSON_PATH, Estimate.class);CreateEstimateRequestDTO REQUEST = JsonUtils.getObjectFromFile(CREATE_ESTIMATE_REQUEST_JSON, CreateEstimateRequestDTO.class);
+        Estimate ESTIMATE = JsonUtils.getObjectFromFile(ESTIMATE_JSON_PATH, Estimate.class);
+        CreateEstimateRequestDTO REQUEST = JsonUtils.getObjectFromFile(CREATE_ESTIMATE_REQUEST_JSON, CreateEstimateRequestDTO.class);
         CustomerDTO CUSTOMERDTO = JsonUtils.getObjectFromFile(CUSTOMER_DTO, CustomerDTO.class);
         SearchProductResponseDTO PRODUCTDTO = JsonUtils.getObjectFromFile(SEARCH_PRODUCT_RESPONSE_DTO, SearchProductResponseDTO.class);
 
