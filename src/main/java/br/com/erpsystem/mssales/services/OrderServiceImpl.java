@@ -11,9 +11,7 @@ import br.com.erpsystem.mssales.dto.http.response.CreateOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrdersResponseDTO;
 import br.com.erpsystem.mssales.entity.Order;
-import br.com.erpsystem.mssales.exceptions.CustomerNotFoundException;
-import br.com.erpsystem.mssales.exceptions.ExceptionResponse;
-import br.com.erpsystem.mssales.exceptions.ProductOutOfStockException;
+import br.com.erpsystem.mssales.exceptions.*;
 import br.com.erpsystem.mssales.mapper.OrderMapper;
 import br.com.erpsystem.mssales.repository.OrderRepository;
 import jakarta.transaction.Transactional;
@@ -27,8 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.erpsystem.mssales.constants.BusinessErrorConstants.CUSTOMER_NOT_REGISTERED;
-import static br.com.erpsystem.mssales.constants.BusinessErrorConstants.PRODUCT_OUT_OF_STOCK;
+import static br.com.erpsystem.mssales.constants.BusinessErrorConstants.*;
 
 @Service
 @Slf4j
@@ -65,6 +62,11 @@ public class OrderServiceImpl implements OrderService {
         log.info("OrderServiceImpl.searchOrderById - Start - Id: {}", id);
 
         OrderDTO orderDTO = mapper.orderToOrderDTO(orderRepository.getReferenceById(UUID.fromString(id)));
+
+        if(orderDTO == null){
+            log.error("OrderServiceImpl.searchOrderById - Error - Não foram encontrados pedidos com este ID!");
+            throw new BusinessException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, ID_NOT_FOUND));
+        }
         log.info("OrderServiceImpl.searchOrderById - End");
         return SearchOrderResponseDTO.builder().orderDTO(orderDTO).build();
     }
@@ -72,7 +74,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public SearchOrdersResponseDTO searchOrderByCpf(String cpf) {
+        log.info("OrderServiceImpl.searchOrderByCpf - Start - Cpf: {}", cpf);
         List<OrderDTO> orderDTOS = mapper.ordersToOrdersDTO(orderRepository.findOrdersBycustomerCpf(cpf));
+
+        if(orderDTOS.isEmpty()){
+            log.error("OrderServiceImpl.searchOrderByCpf - Error - Não foram encontrados pedidos para este cpf!");
+            throw new OrderNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, ORDER_NOT_FOUND));
+        }
+        log.info("OrderServiceImpl.searchOrderByCpf - End");
         return SearchOrdersResponseDTO.builder().orderDTO(orderDTOS).build();
     }
 
@@ -102,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean validateProductStock(ProductDTO productDTO, Integer orderQuantity){
-        return orderQuantity >= productDTO.getQuantityInStock();
+        return orderQuantity <= productDTO.getQuantityInStock();
     }
 
 }

@@ -12,7 +12,11 @@ public class BusinessErrorConstants {
 
     public static final String EXPIRED_ESTIMATE = "[Business Exception] Expired Estimate. Please request a new Estimate!";
 
-    public static String ESTIMATE_NOT_FOUND = "[Business Exception] No estimates were found for this cpf";
+    public static final String ESTIMATE_NOT_FOUND = "[Business Exception] No estimates were found for this cpf";
 
-    public static String DELIVERY_DATE = "[Business Exception] Filling in the delivery date is mandatoty!";
+    public static final String DELIVERY_DATE = "[Business Exception] Filling in the delivery date is mandatory!";
+
+    public static final String ORDER_NOT_FOUND = "[Business Exception] No orders were found for this cpf";
+
+    public static final String ID_NOT_FOUND = "[Business Exception] No orders were found for this id";
 }

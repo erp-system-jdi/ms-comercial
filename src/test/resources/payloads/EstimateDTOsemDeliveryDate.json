@@ -11,7 +11,7 @@
     }
   ],
   "payment_type": "PIX",
-  "expiration_date": "2023-11-17",
+  "expiration_date":"2023-11-25",
   "delivery_date": null,
   "matriculation": "test_bad103831fce"
 }

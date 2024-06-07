@@ -73,7 +73,7 @@ public class EstimateServiceImpl implements EstimateService{
         List<EstimateDTO> estimateDTO = estimateMapper.estimatesToEstimatesDTO(estimateRepository.findEstimatesByCustomerCpf(cpf));
 
         if(estimateDTO.isEmpty()){
-            log.error("EstimateServiceImpl.searchEstimateByCpf - Não foram encontrados orçamentos para este cliente!");
+            log.error("EstimateServiceImpl.searchEstimateByCpf - Error - Não foram encontrados orçamentos para este cliente!");
             throw new EstimateNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, ESTIMATE_NOT_FOUND));
         }
         log.info("EstimateServiceImpl.searchEstimateByCpf - End");
