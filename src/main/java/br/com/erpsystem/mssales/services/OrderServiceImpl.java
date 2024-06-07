@@ -2,7 +2,6 @@ package br.com.erpsystem.mssales.services;
 
 import br.com.erpsystem.mssales.client.CustomerClient;
 import br.com.erpsystem.mssales.client.ProductClient;
-import br.com.erpsystem.mssales.constants.BusinessErrorConstants;
 import br.com.erpsystem.mssales.constants.ErrorCodes;
 import br.com.erpsystem.mssales.dto.CustomerDTO;
 import br.com.erpsystem.mssales.dto.OrderDTO;
@@ -12,7 +11,7 @@ import br.com.erpsystem.mssales.dto.http.response.CreateOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrdersResponseDTO;
 import br.com.erpsystem.mssales.entity.Order;
-import br.com.erpsystem.mssales.exceptions.ComercialException;
+import br.com.erpsystem.mssales.exceptions.CustomerNotFoundException;
 import br.com.erpsystem.mssales.exceptions.ExceptionResponse;
 import br.com.erpsystem.mssales.exceptions.ProductOutOfStockException;
 import br.com.erpsystem.mssales.mapper.OrderMapper;
@@ -23,10 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import static br.com.erpsystem.mssales.constants.BusinessErrorConstants.CUSTOMER_NOT_REGISTERED;
 import static br.com.erpsystem.mssales.constants.BusinessErrorConstants.PRODUCT_OUT_OF_STOCK;
 
 @Service
@@ -46,9 +47,9 @@ public class OrderServiceImpl implements OrderService {
 
         CustomerDTO customerDTO = findCustomer(orderDTO);
 
-        if(orderDTO.getOrderDTO().getProductsOrder().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
+        if(orderDTO.getOrderDTO().getProducts().isEmpty() || ObjectUtils.isEmpty(customerDTO)){
             log.info("OrderServiceImpl.createOrder - Error - order: {}", orderDTO);
-            throw new ComercialException();
+            throw new CustomerNotFoundException(new ExceptionResponse(ErrorCodes.INVALID_REQUEST, CUSTOMER_NOT_REGISTERED ));
         }
         orderDTO.getOrderDTO().setCreateDate(LocalDate.now());
         orderDTO.getOrderDTO().setTotalPrice(calculateTotalPrice(orderDTO));
@@ -79,13 +80,15 @@ public class OrderServiceImpl implements OrderService {
         return customerClient.findCustomerByCpf(orderRequestDTO.getOrderDTO().getCustomerCpf());
     }
 
-    private Double calculateTotalPrice(CreateOrderRequestDTO orderRequestDTO){
+    private BigDecimal calculateTotalPrice(CreateOrderRequestDTO orderRequestDTO){
         getUnitPrice(orderRequestDTO);
-        return orderRequestDTO.getOrderDTO().getProductsOrder().stream().mapToDouble(order -> order.getUnitPrice() * order.getQuantity()).sum();
+        double sum = orderRequestDTO.getOrderDTO().getProducts().stream()
+                .mapToDouble(orderItemDTO -> orderItemDTO.getUnitPrice().doubleValue() * orderItemDTO.getQuantity()).sum();
+        return BigDecimal.valueOf(sum);
     }
 
     private void getUnitPrice(CreateOrderRequestDTO orderRequestDTO){
-        orderRequestDTO.getOrderDTO().getProductsOrder().forEach(orderItemDTO -> {
+        orderRequestDTO.getOrderDTO().getProducts().forEach(orderItemDTO -> {
             ProductDTO productDTO = productClient.findProductById(orderItemDTO.getProductId()).getProductDTO();
 
             if(validateProductStock(productDTO, orderItemDTO.getQuantity())){

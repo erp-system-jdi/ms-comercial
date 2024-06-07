@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class OrdersController {
     private final OrderService orderService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CreateOrderResponseDTO> createOrder(@RequestBody CreateOrderRequestDTO createOrderRequestDTO){
+    public ResponseEntity<CreateOrderResponseDTO> createOrder(@RequestBody @Validated CreateOrderRequestDTO createOrderRequestDTO){
         log.info("ComercialController.criacaoPedido - Start - OrderDTO: {}", createOrderRequestDTO);
         CreateOrderResponseDTO responseDTO = orderService.createOrder(createOrderRequestDTO);
         log.info("ComercialController.criacaoPedido - End");

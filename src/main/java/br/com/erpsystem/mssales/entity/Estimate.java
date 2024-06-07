@@ -15,9 +15,8 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "TB_01_ORDER")
-public class Order implements Serializable {
-
+@Entity(name = "TB_03_ESTIMATE")
+public class Estimate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, unique = true, nullable = false)
@@ -27,14 +26,15 @@ public class Order implements Serializable {
     @Column(name = "customer_cpf")
     private String customerCpf;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Set<OrderItem> products;
+    @JoinColumn(name = "estimate_id")
+    private Set<EstimateItem> products;
     @Column(name = "payment_type")
     private PaymentTypeEnum paymentType;
-    @Column(name = "create_date")
-    private LocalDate createDate;
-    @Column(name = "delivery_date")
-    private LocalDate deliveryDate;
+    @Column(name = "expiration_date")
+    private LocalDate expirationDate;
     @Column(name = "matriculation")
     private String matriculation;
+
+
+
 }

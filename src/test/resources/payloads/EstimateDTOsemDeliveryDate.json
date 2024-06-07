@@ -1,0 +1,17 @@
+{
+  "id": "cc6aa67e-3078-481b-8e3d-7f41aa131510",
+  "total_price": 16.50,
+  "customer_cpf": "42946578801",
+  "products": [
+    {
+      "id": "ddf0eba5-e3be-4737-9be3-b67bdafda216",
+      "product_id": "test_8e0eea26d7ff",
+      "quantity": 11,
+      "unit_price": 1.50
+    }
+  ],
+  "payment_type": "PIX",
+  "expiration_date": "2023-11-17",
+  "delivery_date": null,
+  "matriculation": "test_bad103831fce"
+}

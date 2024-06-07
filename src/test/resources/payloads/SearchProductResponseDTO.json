@@ -1,0 +1,14 @@
+{
+  "product": {
+    "product_id": "e3d6d442-eb27-405c-9960-d3c89567d635",
+    "product_name": "Caneta",
+    "sale_unit": "unit",
+    "unit_price": 1.50,
+    "active": true,
+    "description": "Teclado português ABNT",
+    "quantity_in_stock": 123
+  }
+}
+
+
+
