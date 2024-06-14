@@ -7,7 +7,9 @@ import br.com.erpsystem.mssales.dto.CustomerDTO;
 import br.com.erpsystem.mssales.dto.OrderDTO;
 import br.com.erpsystem.mssales.dto.ProductDTO;
 import br.com.erpsystem.mssales.dto.http.request.CreateOrderRequestDTO;
+import br.com.erpsystem.mssales.dto.http.request.OrderUpdateRequestDTO;
 import br.com.erpsystem.mssales.dto.http.response.CreateOrderResponseDTO;
+import br.com.erpsystem.mssales.dto.http.response.OrderUpdateResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrdersResponseDTO;
 import br.com.erpsystem.mssales.entity.Order;
@@ -83,6 +85,11 @@ public class OrderServiceImpl implements OrderService {
         }
         log.info("OrderServiceImpl.searchOrderByCpf - End");
         return SearchOrdersResponseDTO.builder().orderDTO(orderDTOS).build();
+    }
+
+    @Override
+    public OrderUpdateResponseDTO updateOrder(OrderUpdateRequestDTO orderUpdateRequestDTO) {
+        return null;
     }
 
     private CustomerDTO findCustomer(CreateOrderRequestDTO orderRequestDTO){

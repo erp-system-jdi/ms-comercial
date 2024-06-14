@@ -37,4 +37,6 @@ public class Order implements Serializable {
     private LocalDate deliveryDate;
     @Column(name = "matriculation")
     private String matriculation;
+    @Column(name = "delivery_address")
+    private String deliveryAddress;
 }

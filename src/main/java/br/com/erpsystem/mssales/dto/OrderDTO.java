@@ -35,4 +35,6 @@ public class OrderDTO {
     private LocalDate deliveryDate;
     @JsonProperty("matriculation")
     private String matriculation;
+    @JsonProperty("delivery_address")
+    private String deliveryAddress;
 }

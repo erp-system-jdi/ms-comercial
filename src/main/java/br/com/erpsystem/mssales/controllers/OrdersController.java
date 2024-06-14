@@ -1,7 +1,9 @@
 package br.com.erpsystem.mssales.controllers;
 
 import br.com.erpsystem.mssales.dto.http.request.CreateOrderRequestDTO;
+import br.com.erpsystem.mssales.dto.http.request.OrderUpdateRequestDTO;
 import br.com.erpsystem.mssales.dto.http.response.CreateOrderResponseDTO;
+import br.com.erpsystem.mssales.dto.http.response.OrderUpdateResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrdersResponseDTO;
 import br.com.erpsystem.mssales.services.OrderService;
@@ -23,7 +25,7 @@ public class OrdersController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateOrderResponseDTO> createOrder(@RequestBody @Validated CreateOrderRequestDTO createOrderRequestDTO){
-        log.info("ComercialController.criacaoPedido - Start - OrderDTO: {}", createOrderRequestDTO);
+        log.info("ComercialController.createOrder - Start - OrderDTO: {}", createOrderRequestDTO);
         CreateOrderResponseDTO responseDTO = orderService.createOrder(createOrderRequestDTO);
         log.info("ComercialController.criacaoPedido - End");
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
@@ -43,6 +45,15 @@ public class OrdersController {
         SearchOrdersResponseDTO responseDTO = orderService.searchOrderByCpf(cpf);
         log.info("ComercialController.findOrdersByCpf - End");
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderUpdateResponseDTO> updateOrder(@RequestBody @Validated OrderUpdateRequestDTO orderUpdateRequestDTO){
+        log.info("ComercialController.updateOrder - Start - OrderUpdateRequest: {}", orderUpdateRequestDTO);
+        OrderUpdateResponseDTO responseDTO = orderService.updateOrder(orderUpdateRequestDTO);
+        log.info("ComercialController.updateOrder - End");
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+
+
     }
 
 }

@@ -34,6 +34,9 @@ public class Estimate implements Serializable {
     private LocalDate expirationDate;
     @Column(name = "matriculation")
     private String matriculation;
+    @Column(name = "delivery_address")
+    private String deliveryAddress;
+}
 
 
 
