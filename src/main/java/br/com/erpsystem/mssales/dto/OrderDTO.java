@@ -1,5 +1,6 @@
 package br.com.erpsystem.mssales.dto;
 
+import br.com.erpsystem.mssales.enums.OrderStatusEnum;
 import br.com.erpsystem.mssales.enums.PaymentTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,6 +22,8 @@ public class OrderDTO {
 
     @JsonProperty("id")
     private UUID id;
+    @JsonProperty("status")
+    private OrderStatusEnum status;
     @JsonProperty("total_price")
     private BigDecimal totalPrice;
     @JsonProperty("customer_cpf")

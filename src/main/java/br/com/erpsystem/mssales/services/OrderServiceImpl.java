@@ -13,12 +13,14 @@ import br.com.erpsystem.mssales.dto.http.response.OrderUpdateResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrderResponseDTO;
 import br.com.erpsystem.mssales.dto.http.response.SearchOrdersResponseDTO;
 import br.com.erpsystem.mssales.entity.Order;
+import br.com.erpsystem.mssales.enums.OrderStatusEnum;
 import br.com.erpsystem.mssales.exceptions.*;
 import br.com.erpsystem.mssales.mapper.OrderMapper;
 import br.com.erpsystem.mssales.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -52,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
         }
         orderDTO.getOrderDTO().setCreateDate(LocalDate.now());
         orderDTO.getOrderDTO().setTotalPrice(calculateTotalPrice(orderDTO));
+        orderDTO.getOrderDTO().setStatus(OrderStatusEnum.AGUARDANDO_APROVACAO);
         Order order = orderRepository.save(mapper.orderDTOToOrder(orderDTO.getOrderDTO()));
 
         log.info("OrderServiceImpl.createOrder - End");
@@ -89,6 +92,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderUpdateResponseDTO updateOrder(OrderUpdateRequestDTO orderUpdateRequestDTO) {
+        log.info("OrderServiceImpl.updateOrder - Start - OrderUpdateRequest: {}", orderUpdateRequestDTO);
+
+        OrderDTO orderDTO = mapper.orderToOrderDTO(orderRepository.getReferenceById(orderUpdateRequestDTO.getId()));
+
+        //orderDTO.
+
+
+
+        // primewiro procurar a ordem no banco
+        //verificar se ela está em produção, nesse caso pode alterar endereço
+
+        //se ainda tiver aguardando pagamento pode mudar forma de pagamento
+
+        //depois dessas validações fazer as alterações
+
+        //checar a lista de productsToRemove e verificar se deve excluir todos ou só alguns itens. Por exemplo tem
+        // 10 produtos ABC, ai o cliente quer 5, excluir apenas 5 e deixar o restante
         return null;
     }
 

@@ -1,6 +1,8 @@
 package br.com.erpsystem.mssales.entity;
 
+import br.com.erpsystem.mssales.enums.OrderStatusEnum;
 import br.com.erpsystem.mssales.enums.PaymentTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +24,8 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, unique = true, nullable = false)
     private UUID id;
+    @Column(name = "status")
+    private OrderStatusEnum status;
     @Column(name = "total_price")
     private BigDecimal totalPrice;
     @Column(name = "customer_cpf")
